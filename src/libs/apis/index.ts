@@ -1,0 +1,87 @@
+import { Request } from "hooks/useHttp";
+import { BannerDTO } from "utils/helpers/models/banner.dto";
+import { categoriesSearchDTO } from "utils/helpers/models/categories.dto";
+import { CategoryLinkedIngredientDTO, DietaryLinkedIngredientDTO } from "utils/helpers/models/category-linked-ingredient.dto";
+import { dietarySearchDTO } from "utils/helpers/models/dietaries.dto";
+import { DietaryChoiceDTO } from "utils/helpers/models/dietaryChoice.dto";
+import { IngredientDetailDTO } from "utils/helpers/models/ingredient-detail.dto";
+import { IngredientDTO, IngredientSearchDTO } from "utils/helpers/models/ingredients.dto";
+import { LoginDTO } from "utils/helpers/models/login.dto";
+import { OnBoardingDTO } from "utils/helpers/models/onBoarding.dto";
+import { SessionAmountDTO } from "utils/helpers/models/sessionAmount.dto";
+import { TermConditionsDTO } from "utils/helpers/models/term&Conditions.dto";
+
+export const Apis = {
+    login:(body:LoginDTO)=>Request.post('auth/login',body),
+    forget:(body:any)=>Request.post('auth/send-forgot-password-otp' , body),
+    reset:(body:any)=>Request.post('auth/reset/password' , body),
+    verifyOtp:(body:any)=>Request.post('auth/verify-otp' , body),
+    resendOtp:(body:any)=>Request.post('auth/verifyResetOTP' , body),
+    postCategory:(body:any)=>Request.post('categories', body),
+    getCategories:()=>Request.get('category-ingredients/count'),
+    getCategoryById:(id:number | null)=>Request.get(`categories/${id}`),
+    putCategoryById:(id:number , body:any)=>Request.put(`categories/${id}` , body),
+    postCategoryLinkedIngredient:(body:CategoryLinkedIngredientDTO) => Request.post(`category-ingredients/add-ingredients` , body),
+    getCategoryLinkedIngredientById:(categoryId:number) => Request.get(`category-ingredients/${categoryId}`),
+    getUnLinkedCategoriesIngredients:() => Request.get(`category-ingredients/available`),
+    unLinkedCategoryIngredients : (id:number) => Request.delete(`category-ingredients/${id}`),
+    searchCategoriesIngredients: (data: categoriesSearchDTO) => Request.get(`category-ingredients/search?${data.categoryName ? `categoryName=${data.categoryName}` : ''}${data.status ? `${data.categoryName ? '&' : ''}status=${data.status}` : ''}`),   
+    getDietaries:()=>Request.get(`diatery-ingredients/count`),
+    getDietariesById:(id:number) => Request.get(`/diateries/${id}`),
+    postDietaries:(body:any) => Request.post(`diateries` , body),
+    putDietaries:(id:number , body:any) => Request.put(`diateries/${id}` , body),
+    getDietariesLinkedIngredientById:(dietaryId:number) => Request.get(`diatery-ingredients/${dietaryId}`),
+    getunLinkedDietaries :(dietaryId:number) => Request.get(`diatery-ingredients/unlinked/${dietaryId}`),
+    unLinkedDietaryIngredients : (id:number) => Request.delete(`diatery-ingredients/${id}`),
+    postDietaryLinkedIngredients : (dietaryId:number ,body:DietaryLinkedIngredientDTO) => Request.put(`/diatery-ingredients/${dietaryId}` , body),
+    searchDietaries:(data:dietarySearchDTO) => Request.get(`diatery-ingredients/search?${data?.diateryName ? `diateryName=${data?.diateryName}`: ''}&${data?.dietariesStatus ?  `status=${data?.dietariesStatus}` : ''}`),
+    postIngredient:(body:IngredientDTO)=>Request.post('ingredients' , body),
+    putIngredient:(id:number , body:IngredientDTO)=>Request.put(`/ingredients/${id}` , body),
+    getIngredients:()=>Request.get(`ingredients`),
+    getIngredientById:(id:number | null)=>Request.get(`ingredients/${id}`),
+    deleteIngredient:(id:number)=>Request.delete(`/ingredients/${id}`),
+    getIngredientDetail:() => Request.get('ingredients-details'),
+    postIngredientDetail:(body:IngredientDetailDTO) => Request.post(`ingredients-details` , body),
+    getIngredientDetailById: (id:number) => Request.get(`ingredients-details/search?ingredientId=${id}`),
+    putIngredientDetail:(id:number , body:IngredientDetailDTO) => Request.put(`ingredients-details/${id}` , body),
+    deleteIngredientDetail:(id:number) => Request.delete(`ingredients-details/${id}`),
+    searchIngredients:(data:IngredientSearchDTO) => Request.get(`diatery-ingredients/search?${data?.name ? `ingredientName=${data?.name}` : ''}&${data?.status ? `status=${data?.status}` : ''}`),
+    uploadIngredientImage:(body:any)=>Request.post(`ingredient/upload-image` , body),
+    getUsers:()=>Request.get(`users?userRole=user`),
+    deleteUser:(id:string)=>Request.delete('users'),
+    getChef:()=>Request.get(`users?userRole=homeCook`),
+    getChefById:(id:string ,offset:Number , limit:Number)=>Request.get(`chef/${id}?page=${offset}&limit=${limit}`),
+    postBanner:(body:FormData)=>Request.post(`banners` , body),
+    getBanner:()=>Request.get(`banners`),
+    getBannerById:(id:number ) => Request.get(`banners/${id}`),
+    putBanner:(id:number , body:FormData) =>Request.put(`/banners/${id}` , body),
+    deleteBanner:(id:number)=>Request.delete(`banners/${id}`),
+    uploadBannerImage:(body:any)=>Request.post(`banner/upload-image` , body),
+    patchBanner:(id:string , body:BannerDTO)=>Request.patch(`banner/${id}` , body),
+    getSessionAmount:()=>Request.get('session-amounts'),
+    getSessionAmountById:(id:number)=> Request.get(`session-amounts/${id}`),
+    postSessionAmount:(body:SessionAmountDTO) => Request.post(`session-amounts` , body),
+    putSessionAmount:(id:number, body:SessionAmountDTO) => Request.put(`session-amounts/${id}` , body),
+    getTermAndConditions:()=>Request.get('terms'),
+    getTermAndConditionById:(id:number) => Request.get(`terms/${id}`),
+    postTermAndConditions:(body:TermConditionsDTO) => Request.post(`terms` , body),
+    putTermAndCondition:(id:number , body:TermConditionsDTO) => Request.put(`terms/${id}` , body),
+    postOnBoarding:(body:OnBoardingDTO)=>Request.post(`onboarding` , body),
+    getOnBoarding:()=>Request.get(`onboarding`),
+    getOnBoardingById:(id:number)=>Request.get(`onboarding/${id}`),
+    putOnBoarding:(id:number , body:FormData) =>Request.put(`onboarding/${id} ` , body),
+    uploadOnBoardingImage:(body:any)=>Request.post(`onbording/upload-image` , body),
+    getprivacyPolicy:()=>Request.get('privacypolicy'),
+    getprivacyPolicyById:(id:number)=>Request.get(`privacypolicy/${id}`),
+    postPrivacyPolicy:(body:any)=>Request.post('privacypolicy' , body),
+    putPrivacyPolicy:(id:number , body:any)=>Request.put(`privacypolicy/${id}` , body),
+    postQuestions:(body:DietaryChoiceDTO)=>Request.post(`questions` , body),
+    getQuestions:()=>Request.get(`questions`),
+    getQuestionById:(id:number)=>Request.get(`/questions/${id}`),
+    putQuestion:(id:number , body:DietaryChoiceDTO)=>Request.put(`questions/${id}` , body),
+    getFaqs:()=>Request.get('faqs'),
+    postFaqs:(body:any)=>Request.post('faqs' , body),
+    getFaqsById:(id:number | null)=>Request.get(`faqs/${id}`), 
+    putFaqs:(id:number , body:any) =>Request.put(`faqs/${id}` , body),
+
+}

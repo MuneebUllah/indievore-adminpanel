@@ -1,0 +1,27 @@
+@font-face {
+    font-family: 'Inter';
+    src:
+        url('./Inter/web/Inter-Medium.woff2') format('woff2'),
+        url('./Inter/web/Inter-Regular.woff2') format('woff'),
+    ;
+    font-weight: 400;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Plus Jakarta Sans';
+    src:
+        url('./PlusJakartaSans-2.7.1/fonts/ttf/PlusJakartaSans-Regular.ttf') format('ttf'),
+        url('./PlusJakartaSans-2.7.1/fonts/ttf/PlusJakartaSans-Medium.ttf') format('ttf'),
+    ;
+    font-weight: 400;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Poppins';
+    src:
+        url('./Poppins/Poppins-Regular.ttf') format('ttf'),
+        url('./Poppins/Poppins-Medium.ttf') format('ttf'),
+    ;
+    font-weight: 400;
+    font-style: normal;
+}
